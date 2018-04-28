@@ -10,7 +10,7 @@ import {LogoutButton} from '.';
 class App extends Component {
   render() {
       console.log(this.props)
-      const {getTest} = this.props;
+      const {getTest, test, error, isFetching} = this.props;
 
     return (
       <div className="App">
@@ -23,15 +23,30 @@ class App extends Component {
         </p>
           <LogoutButton/>
           <button onClick={getTest}>test</button>
+          {
+              isFetching ?
+                  <div>Fetching...</div>
+                  :
+                  <div>
+                      <div>
+                          Test value: {test}
+                      </div>
+                      <div>
+                          {error.length > 0 && `Error: ${error}`}
+                      </div>
+                  </div>
+          }
+
       </div>
     );
   }
 }
 
-function mapStateToProps({isFetching, test}, ownProps) {
+function mapStateToProps({isFetching, test, error}, ownProps) {
     return {
         isFetching,
         test,
+        error,
     }
 }
 
