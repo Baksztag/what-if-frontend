@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
 
-import App from './components/App.js';
+import App from '../components/App.js';
 
 class AppRouter extends Component {
     render() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import AppProvider from './Provider';
+import AppProvider from './providers';
 import firebase from 'firebase';
 import dotenv from 'dotenv';
 dotenv.config();

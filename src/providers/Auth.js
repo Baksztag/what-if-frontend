@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import {BrowserRouter} from 'react-router-dom';
 
 import AppRouter from './Router';
-import LoginForm from './LoginForm';
+import SignInForm from '../routes/SignIn/SignInForm';
 
 class AuthProvider extends Component {
     state = {
@@ -37,7 +37,7 @@ class AuthProvider extends Component {
                             <AppRouter/>
                         </BrowserRouter>)
                         :
-                        (<LoginForm/>)
+                        (<SignInForm/>)
                 }
             </div>
         );
