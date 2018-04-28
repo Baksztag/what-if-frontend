@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import firebase from 'firebase';
 import {BrowserRouter} from 'react-router-dom';
+import _ from 'lodash';
+
+import {API} from '../services';
 
 import AppRouter from './Router';
 import SignInForm from '../routes/SignIn/SignInForm';
@@ -12,7 +15,7 @@ class AuthProvider extends Component {
 
     componentDidMount() {
         firebase.auth().onAuthStateChanged((firebaseUser) => {
-            console.log('!!!', firebaseUser)
+            API.saveUserToken(_.get(firebaseUser, '_lat', ''));
 
             if (firebaseUser) {
                 this.setState({
