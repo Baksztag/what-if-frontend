@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {API} from '../services';
 
 export const GET_TEST = 'GET_TEST';
@@ -10,7 +12,7 @@ export function getTest() {
                 dispatch(setTest(result.data));
             })
             .catch(error => {
-                dispatch(getTestError(error.message));
+                dispatch(getTestError(_.get(error, 'message', 'error')));
             })
     }
 }
