@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import firebase from 'firebase';
 
 class LogoutButton extends Component {
@@ -7,15 +8,22 @@ class LogoutButton extends Component {
     };
 
     render() {
+        const {className} = this.props;
+
         return (
-            <button onClick={this.onLogout}>
+            <button className={className}
+                    onClick={this.onLogout}>
                 Sign out
             </button>
         );
     }
 }
 
-LogoutButton.propTypes = {};
-LogoutButton.defaultProps = {};
+LogoutButton.propTypes = {
+    className: PropTypes.string,
+};
+LogoutButton.defaultProps = {
+    className: '',
+};
 
 export default LogoutButton;
