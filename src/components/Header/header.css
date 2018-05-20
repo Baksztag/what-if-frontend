@@ -1,0 +1,39 @@
+.wi-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.wi-header .wi-header-left, .wi-header .wi-header-right {
+    display: flex;
+    flex-direction: row;
+}
+
+.wi-header .wi-header-option {
+/*.wi-header .wi-header-left .wi-header-option {*/
+    padding: 4px 4px;
+}
+
+/*.wi-header .wi-header-right .wi-header-option {*/
+    /*padding: 4px 0 4px 8px;*/
+/*}*/
+
+.wi-header .wi-header-option button {
+    cursor: pointer;
+    border: 0;
+    border-bottom: 3px groove black;
+}
+
+.wi-header .wi-header-option button:hover {
+    border-bottom: 3px solid lightskyblue;
+}
+
+.wi-header .wi-header-option button.active {
+    border-bottom: 3px solid lightskyblue;
+    /*background-color: lightskyblue;*/
+}
+
+.wi-header .wi-header-option button a {
+    text-decoration: none;
+    color: initial;
+}
