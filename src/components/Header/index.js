@@ -5,40 +5,45 @@ import {LogoutButton} from '../';
 
 import './header.css';
 
-const Header = ({}) => (
+function getHeaderOptionClassName(pathname, path) {
+    return `header-button ${pathname === `/${path}` ? 'active' : ''}`;
+}
+
+const Header = ({pathname}) => (
     <header className="wi-header">
         <div className="wi-header-left">
             <div className="wi-header-option">
-                <button className="header-button">
-                    <Link to="/lobby">
+                <Link to="/lobby">
+                    <button className={getHeaderOptionClassName(pathname, 'lobby')}>
                         Lobby
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
 
             <div className="wi-header-option">
-                <button className="header-button">
-                    <Link to="/history">
+                <Link to="/history">
+                    <button className={getHeaderOptionClassName(pathname, 'history')}>
+
                         History
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
 
             <div className="wi-header-option">
-                <button className="header-button">
-                    <Link to="/best">
+                <Link to="/best">
+                    <button className={getHeaderOptionClassName(pathname, 'best')}>
                         Best
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
         </div>
         <div className="wi-header-right">
             <div className="wi-header-option">
-                <button className="header-button">
-                    <Link to="/profile">
+                <Link to="/profile">
+                    <button className={getHeaderOptionClassName(pathname, 'profile')}>
                         Profile
-                    </Link>
-                </button>
+                    </button>
+                </Link>
             </div>
 
             <div className="wi-header-option">

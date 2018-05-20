@@ -4,6 +4,7 @@ import {BrowserRouter} from 'react-router-dom';
 
 import AppRouter from './Router';
 import {API} from '../services';
+import {Loader} from '../components';
 
 class WebSocketProvider extends Component {
     constructor(props) {
@@ -15,10 +16,10 @@ class WebSocketProvider extends Component {
 
         API.getUserToken()
             .then(token => {
-                this.socket = new Socket(API.WS_URL);
+                this.socket = new Socket(API.WS_URL, {params: {token}});
                 this.socket.connect();
 
-                this.channel = this.socket.channel("room:lobby", {params: {token}});
+                this.channel = this.socket.channel("room:lobby", {});
                 this.channel.join()
                     .receive("ok", resp => {
                         console.log("Joined successfully", resp)
@@ -52,7 +53,7 @@ class WebSocketProvider extends Component {
             </BrowserRouter>)
             :
             (<div>
-                :(
+                <Loader/>
                 {this.state.error}
             </div>)
     }
