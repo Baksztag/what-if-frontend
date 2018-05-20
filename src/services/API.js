@@ -2,7 +2,7 @@ import axios from 'axios';
 import firebase from 'firebase';
 
 const API_URL = 'http://localhost:4000';
-const WS_URL = 'ws://localhost:4000';
+const WS_URL = 'ws://localhost:4000/s';
 
 function getUserToken() {
     return firebase.auth().currentUser.getIdToken(true)
