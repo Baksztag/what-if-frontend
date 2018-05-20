@@ -22,26 +22,26 @@ class WebSocketProvider extends Component {
                 this.channel.join()
                     .receive("ok", resp => {
                         console.log("Joined successfully", resp)
-                        this.state = {
+                        this.setState(prevState => ({
                             connected: true,
                             error: '',
-                        };
+                        }));
                     })
                     .receive("error", resp => {
                         console.log("Unable to join", resp)
-                        this.state = {
+                        this.setState(prevState => ({
                             connected: false,
                             error: resp,
-                        }
+                        }))
                     })
             })
             .catch(error => {
                 this.socket = null;
                 this.channel = null;
-                this.state = {
+                this.setState(prevState => ({
                     connected: false,
                     error: error,
-                }
+                }));
             })
     }
 
