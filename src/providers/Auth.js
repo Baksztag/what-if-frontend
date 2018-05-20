@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import firebase from 'firebase';
-import {BrowserRouter} from 'react-router-dom';
 import _ from 'lodash';
 
 import {API} from '../services';
 
-import AppRouter from './Router';
+import WebSocketProvider from './WebSocket';
 import SignInForm from '../routes/SignIn/SignInForm';
 
 class AuthProvider extends Component {
@@ -36,9 +35,7 @@ class AuthProvider extends Component {
             <div>
                 {
                     signedIn ?
-                        (<BrowserRouter>
-                            <AppRouter/>
-                        </BrowserRouter>)
+                        (<WebSocketProvider/>)
                         :
                         (<SignInForm/>)
                 }

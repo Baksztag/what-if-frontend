@@ -2,6 +2,13 @@ import axios from 'axios';
 import firebase from 'firebase';
 
 const API_URL = 'http://localhost:4000';
+const WS_URL = 'ws://localhost:4000';
+
+function getUserToken() {
+    return firebase.auth().currentUser.getIdToken(true)
+        .then(idToken => idToken)
+        .catch(error => error)
+}
 
 // function getUserToken() {
     // return `Bearer ${localStorage.getItem("AUTH_TOKEN")};`
@@ -36,6 +43,7 @@ function get(url) {
 
 export default {
     get,
-    // getUserToken,
-    saveUserToken
+    getUserToken,
+    saveUserToken,
+    WS_URL,
 };

@@ -1,13 +1,23 @@
 import React, {Component} from 'react';
-import {Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 
 import App from '../components/App.js';
+import Lobby from '../routes/Lobby';
+import {Header} from '../components';
 
 class AppRouter extends Component {
     render() {
+        console.log(this.props)
+
         return (
-            <div>
-                <Route exact path="/" component={App}/>
+            <div id="wi" className="wi-container">
+
+
+                <Header/>
+                <div className="wi-content">
+                    <Route exact path="/" component={App}/>
+                    <Route exact path="/lobby" component={Lobby}/>
+                </div>
             </div>
         );
     }
@@ -16,4 +26,4 @@ class AppRouter extends Component {
 AppRouter.propTypes = {};
 AppRouter.defaultProps = {};
 
-export default AppRouter;
+export default withRouter(props => <AppRouter {...props}/>);
