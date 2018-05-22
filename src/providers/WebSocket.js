@@ -6,6 +6,9 @@ import AppRouter from './Router';
 import {API} from '../services';
 import {Loader} from '../components';
 
+import DisplayNameForm from '../routes/DisplayName';
+import {WebSocketProvider as Provider} from './context/webSocketContext';
+
 class WebSocketProvider extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +22,8 @@ class WebSocketProvider extends Component {
                 this.socket = new Socket(API.WS_URL, {params: {token}});
                 this.socket.connect();
 
-                this.channel = this.socket.channel("room:lobby", {});
+                this.channel = this.socket.channel("lobby:*", {});
+
                 this.channel.join()
                     .receive("ok", resp => {
                         console.log("Joined successfully", resp)
@@ -32,7 +36,7 @@ class WebSocketProvider extends Component {
                         console.log("Unable to join", resp)
                         this.setState(prevState => ({
                             connected: false,
-                            error: resp,
+                            error: resp.reason,
                         }))
                     })
             })
@@ -41,21 +45,54 @@ class WebSocketProvider extends Component {
                 this.channel = null;
                 this.setState(prevState => ({
                     connected: false,
-                    error: error,
+                    error: error.reason,
                 }));
             })
     }
 
+    foo = () => {
+        console.log('foo')
+    };
+
+    subscribe = (message, onReceiveCallback) => {
+        this.channel.on(message, onReceiveCallback);
+    };
+
+    createRoom = (newRoomName) => {
+        console.log('create room', newRoomName)
+        this.channel.push("create_room", {name: newRoomName});
+    };
+
+    getRooms = () => {
+        this.channel.push("get_rooms", {});
+    };
+
+    joinRoom = (roomName) => {
+        this.channel.push("join_room", {name: roomName});
+    };
+
     render() {
         return this.state.connected ?
-            (<BrowserRouter>
-                <AppRouter/>
-            </BrowserRouter>)
+            (<Provider value={{
+                foo: this.foo,
+                createRoom: this.createRoom,
+                subscribe: this.subscribe,
+                getRooms: this.getRooms,
+                joinRoom: this.joinRoom,
+            }}>
+                <BrowserRouter>
+                    <AppRouter/>
+                </BrowserRouter>
+            </Provider>)
             :
-            (<div>
-                <Loader/>
-                {this.state.error}
-            </div>)
+            (this.state.error === 'User not registered' ?
+                    (<DisplayNameForm/>)
+                    :
+                    (<div>
+                         <Loader/>
+                         {this.state.error}
+                     </div>)
+             )
     }
 }
 
