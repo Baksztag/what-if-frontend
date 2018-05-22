@@ -2,21 +2,24 @@ import React, {Component} from 'react';
 import {Route, withRouter} from 'react-router-dom';
 
 import App from '../components/App.js';
-import Lobby from '../routes/Lobby';
+import {Best, History, Lobby, Profile} from '../routes';
 import {Header} from '../components';
 
 class AppRouter extends Component {
     render() {
-        console.log(this.props)
+        const {location: {pathname}} = this.props;
 
         return (
             <div id="wi" className="wi-container">
 
 
-                <Header/>
+                <Header pathname={pathname}/>
                 <div className="wi-content">
                     <Route exact path="/" component={App}/>
                     <Route exact path="/lobby" component={Lobby}/>
+                    <Route exact path="/history" component={History}/>
+                    <Route exact path="/best" component={Best}/>
+                    <Route exact path="/profile" component={Profile}/>
                 </div>
             </div>
         );
