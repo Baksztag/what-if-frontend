@@ -59,7 +59,7 @@ class WebSocketProvider extends Component {
     };
 
     createRoom = (newRoomName) => {
-        console.log('create room', newRoomName)
+        // console.log('create room', newRoomName)
         this.channel.push("create_room", {name: newRoomName});
     };
 

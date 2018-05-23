@@ -9,57 +9,67 @@ class Room extends Component {
         this.state = {
             connected: false,
             error: '',
+            occupants: [],
         };
 
-        API.getUserToken()
-            .then(token => {
-                this.socket = new Socket(API.WS_URL, {params: {token}});
-                this.socket.connect();
+        // API.getUserToken()
+        //     .then(token => {
+        //         this.socket = new Socket(API.WS_URL, {});
+        //         this.socket.connect();
+        //
+        //         this.channel = this.socket.channel("room:*", {});
+        //
+        //         this.channel.on('occupants', (payload) => {
+        //             this.setState({
+        //                 occupants: payload.occupants,
+        //             })
+        //         });
 
-                this.channel = this.socket.channel("room:*", {});
+                // this.channel.on()
 
-                this.channel.on("ok", payload => {
-                    console.log(payload.body)
-                    // let messageItem = document.createElement("li")
-                    // messageItem.innerText = `[${Date()}] ${payload.body}`
-                    // messagesContainer.appendChild(messageItem)
-                });
-
-                this.channel.on("error", payload => {
-                    console.log(payload)
-                });
-
-                this.channel.join()
-                    .receive("ok", resp => {
-                        console.log("Joined successfully", resp)
-                        this.setState(prevState => ({
-                            connected: true,
-                            error: '',
-                        }));
-                    })
-                    .receive("error", resp => {
-                        console.log("Unable to join", resp)
-                        this.setState(prevState => ({
-                            connected: false,
-                            error: resp.reason,
-                        }))
-                    })
-            })
-            .catch(error => {
-                this.socket = null;
-                this.channel = null;
-                this.setState(prevState => ({
-                    connected: false,
-                    error: error.reason,
-                }));
-            })
+                // this.channel.join()
+                //     .receive("ok", resp => {
+                //         console.log("Joined successfully", resp)
+                //         this.setState(prevState => ({
+                //             connected: true,
+                //             error: '',
+                //         }));
+                //     })
+                //     .receive("error", resp => {
+                //         console.log("Unable to join", resp)
+                //         this.setState(prevState => ({
+                //             connected: false,
+                //             error: resp.reason,
+                //         }))
+                //     })
+            // })
+            // .catch(error => {
+            //     this.socket = null;
+            //     this.channel = null;
+            //     this.setState(prevState => ({
+            //         connected: false,
+            //         error: error.reason,
+            //     }
+            //     ));
+            // })
     }
+
+    componentDidMount() {
+        // this.channel.push('get_occupants', {name: this.props.roomName});
+    }
+
 
     render() {
         return (
             <div>
-                Joined room
-                {this.props.roomName}
+                Joined room {this.props.roomName}
+                <div>
+                    {this.state.occupants.map(occupant => (
+                        <div key={occupant}>
+                            {occupant}
+                        </div>
+                    ))}
+                </div>
             </div>
         );
     }
