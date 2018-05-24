@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import {API} from '../services';
 
-import WebSocketProvider from './WebSocket';
+import WebSocketProvider from './webSocket/index';
 import SignInForm from '../routes/SignIn/SignInForm';
 
 class AuthProvider extends Component {
