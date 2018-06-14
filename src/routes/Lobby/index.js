@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import {webSocketConsumer} from '../../providers/webSocket/webSocketContext';
-import {lobbyChannelProvider} from '../../providers/channel/lobbyChannel/lobbyChannelContext';
 import Lobby from './Lobby';
 
 class LobbyChannelProvider extends Component {
@@ -13,7 +12,7 @@ class LobbyChannelProvider extends Component {
 
     onJoinSuccess = (resp) => {
         console.log("Joined successfully", resp)
-        this.setState(prevState => ({
+        this.setState(() => ({
             connected: true,
             error: '',
         }));
@@ -21,7 +20,7 @@ class LobbyChannelProvider extends Component {
 
     onJoinError = (resp) => {
         console.log("Unable to join", resp)
-        this.setState(prevState => ({
+        this.setState(() => ({
             connected: false,
             error: resp.reason,
         }))

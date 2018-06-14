@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import firebase from 'firebase';
 
+import {Button, ButtonRow, Input} from '../../components';
+
+import './sign-in-form.css';
+
 class LoginForm extends Component {
     state = {
         email: '',
@@ -41,19 +45,29 @@ class LoginForm extends Component {
         const {email, password} = this.state;
 
         return (
-            <div>
-                <input value={email}
-                       type="email"
-                       placeholder="Email"
-                       onChange={this.onEmailChange}
-                />
-                <input value={password}
-                       type="password"
-                       placeholder="Password"
-                       onChange={this.onPasswordChange}
-                />
-                <button onClick={this.onSignUp}>Sign up</button>
-                <button onClick={this.onSignIn}>Sign in</button>
+            <div className="sign-in-form-container">
+                <div className="sign-in-form">
+                    <Input label="Email"
+                           onChange={this.onEmailChange}
+                           type="email"
+                           placeholder="user@example.com"
+                           value={email}
+                    />
+                    <Input label="Password"
+                           onChange={this.onPasswordChange}
+                           type="password"
+                           placeholder="password"
+                           value={password}
+                    />
+                    <ButtonRow>
+                        <Button onClick={this.onSignUp}>
+                            Sign up
+                        </Button>
+                        <Button onClick={this.onSignIn}>
+                            Sign in
+                        </Button>
+                    </ButtonRow>
+                </div>
             </div>
         );
     }

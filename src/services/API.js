@@ -2,9 +2,9 @@ import axios from 'axios';
 import firebase from 'firebase';
 
 // const API_URL = 'http://localhost:4000';
-const API_URL = 'http://192.168.43.37:4000';
+const API_URL = 'http://172.20.10.2:4000';
 // const WS_URL = 'ws://localhost:4000/s';
-const WS_URL = 'ws://192.168.43.37:4000/s';
+const WS_URL = 'ws://172.20.10.2:4000/s';
 
 function getUserToken() {
     // console.log(firebase.auth().currentUser)
@@ -12,7 +12,15 @@ function getUserToken() {
         // .then(idToken => idToken)
     //TODO replace with actual token
         .then(idToken => firebase.auth().currentUser.uid)
-        .catch(error => error)
+        .catch(error => {
+            console.log(error)
+
+            return error;
+        })
+}
+
+function getCurrentUser() {
+    return firebase.auth().currentUser.uid;
 }
 
 // function getUserToken() {
@@ -65,6 +73,7 @@ function post(url, data) {
 
 export default {
     get,
+    getCurrentUser,
     getUserToken,
     post,
     saveUserToken,

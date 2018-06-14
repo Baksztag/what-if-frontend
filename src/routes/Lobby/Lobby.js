@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import _ from 'lodash';
 
 import Room from '../Room';
-import {lobbyChannelConsumer} from '../../providers/channel/lobbyChannel/lobbyChannelContext';
+import RoomList from './RoomList';
+
+import {Button, Input} from '../../components';
+// import {lobbyChannelConsumer} from '../../providers/channel/lobbyChannel/lobbyChannelContext';
 
 class Lobby extends Component {
     state = {
@@ -67,11 +70,20 @@ class Lobby extends Component {
         // const {joinRoom} = this.props;
 
         // joinRoom(name);
-        console.log('joining', name)
-        this.setState({
-            joinedRoom: true,
-            joinedRoomName: name,
-        })
+        return () => {
+            console.log('joining', name)
+            this.setState({
+                joinedRoom: true,
+                joinedRoomName: name,
+            })
+        };
+    };
+
+    disconnectFromRoom = () => {
+        this.setState(() => ({
+            joinedRoom: false,
+            joinedRoomName: '',
+        }));
     };
 
     render() {
@@ -82,26 +94,30 @@ class Lobby extends Component {
                 {
                     joinedRoom ?
                         (<div>
-                            <Room roomName={joinedRoomName}/>
+                            <Room disconnectFromRoom={this.disconnectFromRoom}
+                                  roomName={joinedRoomName}
+                            />
                         </div>)
                         :
                         (<div>
-                            <input type="text"
-                                   value={newRoomName}
+                            <Input label="Room name"
                                    onChange={this.onNewRoomNameChange}
-                            />
-                            <button onClick={() => this.props.createRoom(newRoomName)}>
+                                   value={newRoomName}
+                                   error={error}/>
+                            <Button onClick={() => this.props.createRoom(newRoomName)}>
                                 Create room
-                            </button>
-                            <span>{error}</span>
-                            <div>
-                                {rooms.map(room => (
-                                    <div key={room}
-                                         onClick={() => this.joinRoom(room)}>
-                                        {room}
-                                    </div>
-                                ))}
-                            </div>
+                            </Button>
+                            <RoomList joinRoom={this.joinRoom}
+                                      rooms={rooms}
+                            />
+                            {/*<div>*/}
+                                {/*{rooms.map(room => (*/}
+                                    {/*<div key={room}*/}
+                                         {/*onClick={() => this.joinRoom(room)}>*/}
+                                        {/*{room}*/}
+                                    {/*</div>*/}
+                                {/*))}*/}
+                            {/*</div>*/}
                         </div>)
                 }
 

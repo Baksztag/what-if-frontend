@@ -23,10 +23,17 @@ class WebSocketProvider extends Component {
                 this.socket = new Socket(API.WS_URL, {params: {token}});
                 this.socket.connect();
 
-                this.setState(prevState => ({
-                    connected: true,
-                    error: '',
-                }));
+                this.socket.onOpen(() => {
+                    this.setState(() => ({
+                        connected: true,
+                        error: '',
+                    }));
+                });
+
+                // this.setState(() => ({
+                //     connected: true,
+                //     error: '',
+                // }));
 
                 this.socket.onError((error) => {
                     console.log(error)
@@ -57,7 +64,8 @@ class WebSocketProvider extends Component {
             .catch(error => {
                 this.socket = null;
                 this.channel = null;
-                this.setState(prevState => ({
+                debugger
+                this.setState(() => ({
                     connected: false,
                     error: error.reason,
                 }));
@@ -95,7 +103,9 @@ class WebSocketProvider extends Component {
     };
 
     render() {
-        return this.state.connected ?
+        const {connected} = this.state;
+
+        return connected ?
             (<Provider value={{
                 // foo: this.foo,
                 // createRoom: this.createRoom,

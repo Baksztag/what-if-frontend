@@ -1,5 +1,73 @@
+html {
+    height: 100%;
+}
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    height: 100%;
+    background-color: #4f5b66;
+}
+
+.wi-loader-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(52, 61, 70, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wi-loader-container .wi-loader {
+    width: 50vw;
+    height: 30vh;
+    background-color: #65737e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 4px 4px rgba(52, 61, 70, 0.3);
+}
+
+.wi-button-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.wi-button {
+    padding: 4px 8px;
+    margin: 4px;
+    background-color: #c0c5ce;
+    box-shadow: 2px 2px rgba(52, 61, 70, 0.3);
+}
+
+.wi-input-container {
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    width: 20vh;
+}
+
+.wi-input-container.errorOccurred {
+    color: darkred;
+    border: darkred dashed 1px;
+    border-radius: 4px;
+}
+
+.wi-input-container input {
+    border: #c0c5ce solid 1px;
+    background-color: #c0c5ce;
+}
+
+.wi-input-container.errorOccurred input {
+    border-bottom: darkred dashed 1px;
+}
+
+.wi-input-container .wi-input-label {
+    padding-bottom: 4px;
+}
+
+.wi-input-container .wi-input-error {
+    padding-top: 4px;
 }
