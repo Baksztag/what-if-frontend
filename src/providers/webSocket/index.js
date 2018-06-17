@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Socket} from 'phoenix-channels';
+import {Socket} from '../../phoenix-channels';
 import {BrowserRouter} from 'react-router-dom';
 
 import AppRouter from '../Router';
