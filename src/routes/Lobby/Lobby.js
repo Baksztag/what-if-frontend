@@ -5,7 +5,6 @@ import Room from '../Room';
 import RoomList from './RoomList';
 
 import {Button, Input} from '../../components';
-// import {lobbyChannelConsumer} from '../../providers/channel/lobbyChannel/lobbyChannelContext';
 
 class Lobby extends Component {
     state = {
@@ -23,7 +22,6 @@ class Lobby extends Component {
 
         subscribe('room_created', (payload) => {
             console.log('New room!', payload.name)
-            // this.joinRoom(payload.name)
             this.addRoom(payload.name);
         });
 
@@ -66,9 +64,6 @@ class Lobby extends Component {
     };
 
     joinRoom = (name) => {
-        // const {joinRoom} = this.props;
-
-        // joinRoom(name);
         return () => {
             console.log('joining', name)
             this.setState({
