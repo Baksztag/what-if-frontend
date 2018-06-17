@@ -2,8 +2,14 @@ import React, {Component} from 'react';
 
 import {webSocketConsumer} from '../../providers/webSocket/webSocketContext';
 import Lobby from './Lobby';
+import DisplayNameForm from '../DisplayName';
 
 class LobbyChannelProvider extends Component {
+    state = {
+        connected: false,
+        error: '',
+    }
+
     componentDidMount() {
         const {joinChannel} = this.props;
 
@@ -43,6 +49,12 @@ class LobbyChannelProvider extends Component {
     //     this.channel.push("join_room", {name: roomName});
     // };
 
+    onRegisterSuccess = () => {
+        this.setState(() => ({
+            error: '',
+        }));
+    };
+
     render() {
         // return (
         //     <lobbyChannelProvider value={{
@@ -54,12 +66,17 @@ class LobbyChannelProvider extends Component {
         //         <Lobby/>
         //     </lobbyChannelProvider>
         // )
+        const {error} = this.state;
+
         return (
-            !!this.channel && <Lobby subscribe={this.subscribe}
-                                     createRoom={this.createRoom}
-                                     getRooms={this.getRooms}
-                                     // joinRoom={this.joinRoom}
-            />
+            error === 'User not registered' ?
+                (<DisplayNameForm onRegisterSuccess={this.onRegisterSuccess}/>)
+                :
+                (!!this.channel && <Lobby subscribe={this.subscribe}
+                                          createRoom={this.createRoom}
+                                          getRooms={this.getRooms}
+                    // joinRoom={this.joinRoom}
+                />)
         )
     }
 }

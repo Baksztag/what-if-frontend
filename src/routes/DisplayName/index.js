@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import {API} from '../../services';
+import {Input, Button} from '../../components';
 
 class DisplayNameForm extends Component {
     state = {
@@ -14,10 +16,11 @@ class DisplayNameForm extends Component {
     };
 
     onButtonClick = () => {
+        const {onRegisterSuccess} = this.props;
         const {name} = this.state;
 
         API.post('/display-name', {name})
-            .then((res) => console.log(res))
+            .then(onRegisterSuccess)
             .catch((e) => console.log(e))
     };
 
@@ -26,20 +29,21 @@ class DisplayNameForm extends Component {
 
         return (
             <div>
-                Looks like you have no name yet.
-                Choose one below:
-                <input type="text"
+                <Input type="text"
+                       label="Your nickname: "
                        placeholder="Name"
                        onChange={this.onDisplayNameChange}
                        value={name}
                 />
-                <button onClick={this.onButtonClick}>OK</button>
+                <Button onClick={this.onButtonClick}>OK</Button>
             </div>
         );
     }
 }
 
-DisplayNameForm.propTypes = {};
+DisplayNameForm.propTypes = {
+    onRegisterSuccess: PropTypes.func.isRequired,
+};
 DisplayNameForm.defaultProps = {};
 
 export default DisplayNameForm;
