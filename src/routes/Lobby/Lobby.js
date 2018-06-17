@@ -46,7 +46,6 @@ class Lobby extends Component {
         });
 
         subscribe('joined', (payload) => {
-            console.log(payload)
             this.setState({
                 joinedRoomName: payload.name,
             });
