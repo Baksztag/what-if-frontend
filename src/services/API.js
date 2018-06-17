@@ -1,10 +1,8 @@
 import axios from 'axios';
 import firebase from 'firebase';
 
-// const API_URL = 'http://localhost:4000';
-const API_URL = 'http://172.20.10.2:4000';
-// const WS_URL = 'ws://localhost:4000/s';
-const WS_URL = 'ws://172.20.10.2:4000/s';
+const API_URL = process.env.REACT_APP_API_URL;
+const WS_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 function getUserToken() {
     // console.log(firebase.auth().currentUser)
