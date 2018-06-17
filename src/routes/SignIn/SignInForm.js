@@ -9,17 +9,20 @@ class LoginForm extends Component {
     state = {
         email: '',
         password: '',
+        error: '',
     };
 
     onEmailChange = (e) => {
         this.setState({
             email: e.target.value,
+            error: '',
         });
     };
 
     onPasswordChange = (e) => {
         this.setState({
             password: e.target.value,
+            error: '',
         });
     };
 
@@ -29,7 +32,12 @@ class LoginForm extends Component {
 
         auth.signInWithEmailAndPassword(email, password)
             .then((user) => {})
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                console.log(error)
+                this.setState(() => ({
+                    error: error.message,
+                }));
+            })
     };
 
     onSignUp = () => {
@@ -38,11 +46,16 @@ class LoginForm extends Component {
 
         auth.createUserWithEmailAndPassword(email, password)
             .then((user) => {})
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                console.log(error)
+                this.setState(() => ({
+                    error: error.message,
+                }));
+            })
     };
 
     render() {
-        const {email, password} = this.state;
+        const {email, password, error} = this.state;
 
         return (
             <div className="sign-in-form-container">
@@ -58,6 +71,7 @@ class LoginForm extends Component {
                            type="password"
                            placeholder="password"
                            value={password}
+                           error={error}
                     />
                     <ButtonRow>
                         <Button onClick={this.onSignUp}>
