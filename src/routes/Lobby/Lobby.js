@@ -21,22 +21,23 @@ class Lobby extends Component {
         getRooms();
 
         subscribe('room_created', (payload) => {
-            console.log('New room!', payload.name)
             this.addRoom(payload.name);
         });
 
         subscribe('error', (payload) => {
-            console.log(payload)
             if (payload.reason === 'exists') {
                 this.setState({
-                    error: 'Room with this name already exists'
-                })
+                    error: 'Room with this name already exists',
+                });
+            } else if (payload.reason === 'name_invalid') {
+                this.setState({
+                    error: 'Invalid room name',
+                });
             }
         });
 
         subscribe('rooms_list', (payload) => {
             const rooms = _.get(payload, 'rooms', []);
-            console.log(rooms)
 
             this.setState({
                 rooms,
@@ -65,7 +66,6 @@ class Lobby extends Component {
 
     joinRoom = (name) => {
         return () => {
-            console.log('joining', name)
             this.setState({
                 joinedRoom: true,
                 joinedRoomName: name,
@@ -104,14 +104,6 @@ class Lobby extends Component {
                             <RoomList joinRoom={this.joinRoom}
                                       rooms={rooms}
                             />
-                            {/*<div>*/}
-                                {/*{rooms.map(room => (*/}
-                                    {/*<div key={room}*/}
-                                         {/*onClick={() => this.joinRoom(room)}>*/}
-                                        {/*{room}*/}
-                                    {/*</div>*/}
-                                {/*))}*/}
-                            {/*</div>*/}
                         </div>)
                 }
 
@@ -123,5 +115,4 @@ class Lobby extends Component {
 Lobby.propTypes = {};
 Lobby.defaultProps = {};
 
-// export default lobbyChannelConsumer(Lobby);
 export default Lobby;
