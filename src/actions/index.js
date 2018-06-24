@@ -2,6 +2,47 @@ import _ from 'lodash';
 
 import {API} from '../services';
 
+export const GET_GAMES = 'GET_GAMES';
+function getGamesStart() {
+    return {
+        type: GET_GAMES,
+    };
+}
+
+export const SET_GAMES = 'SET_GAMES';
+function setGames({data: {games}}) {
+    return {
+        type: SET_GAMES,
+        payload: {
+            games,
+        },
+    };
+}
+
+export const GET_GAMES_ERROR = 'GET_GAMES_ERROR';
+function getGamesError({reason}) {
+    return {
+        type: GET_GAMES_ERROR,
+        payload: {
+            error: reason,
+        },
+    };
+}
+
+export function getGames() {
+    return dispatch => {
+        dispatch(getGamesStart());
+        return API.get('/games')
+            .then(result => {
+                console.log(result)
+                dispatch(setGames(result));
+            })
+            .catch(error => {
+                dispatch(getGamesError(error));
+            })
+    }
+}
+
 export const GET_TEST = 'GET_TEST';
 
 export function getTest() {

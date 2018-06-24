@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Route, withRouter} from 'react-router-dom';
 
-import {Best, History, Lobby, Profile, Welcome} from '../routes';
+import {Best, HistoryProvider, Lobby, Profile, Welcome} from '../routes';
 import {Header} from '../components';
 
 class AppRouter extends Component {
@@ -17,7 +17,7 @@ class AppRouter extends Component {
                         <Route exact path="/lobby" render={(props) => (
                             <Lobby {...props}/>
                         )}/>
-                        <Route exact path="/history" component={History}/>
+                        <Route exact path="/history" component={HistoryProvider}/>
                         <Route exact path="/best" component={Best}/>
                         <Route exact path="/profile" component={Profile}/>
                     </div>
