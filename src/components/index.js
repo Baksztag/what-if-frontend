@@ -3,7 +3,7 @@ import ButtonRow from './ButtonRow';
 import Header from './Header';
 import Input from './Input';
 import Loader from './Loader';
-import LogoutButton from './LogoutButton';
+import LogoutButton from './Header/LogoutButton';
 
 export {
     Button,
