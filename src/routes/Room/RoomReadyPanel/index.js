@@ -1,13 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Button} from '../../../components';
 
 const RoomReadyPanel = ({error, onReady, readyButtonDisabled}) => (
     <div className="room-ready-panel">
-        {error === 'no_questions_added' && (
-            <span>You can't be marked as ready when there are no questions</span>
-        )}
+        {error === 'no_questions_added' ?
+            (<div>You can't be marked as ready when there are no questions</div>)
+            :
+            (<div>{error}</div>)
+        }
         <Button onClick={onReady}
                 disabled={readyButtonDisabled}
         >

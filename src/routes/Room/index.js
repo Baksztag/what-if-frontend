@@ -22,7 +22,7 @@ class RoomChannelProvider extends Component {
 
         const {joinChannel, roomName} = props;
 
-        this.channel = joinChannel(`room:${roomName}`, {}, this.onJoinSuccess, this.onJoinError)
+        this.channel = joinChannel(`room:${roomName}`, {}, this.onJoinSuccess, this.onJoinError);
 
         this.subscribe("user_left", (leavingUser) => {
             this.setState((prevState) => {
@@ -96,23 +96,23 @@ class RoomChannelProvider extends Component {
         });
 
         this.subscribe('error', ({reason}) => {
-            this.setState(() => ({
-                error: reason,
-            }));
+            if (reason === 'You cannot add questions in ready state') {
+                this.setState({
+                    error: 'You cannot add questions in ready state',
+                });
+            }
         });
     }
 
-    onJoinSuccess = resp => {
-        console.log("Joined successfully", resp)
-        this.setState(prevState => ({
+    onJoinSuccess = () => {
+        this.setState(() => ({
             connected: true,
             error: '',
         }));
     };
 
-    onJoinError = resp => {
-        console.log("Unable to join", resp)
-        this.setState(prevState => ({
+    onJoinError = (resp) => {
+        this.setState(() => ({
             connected: false,
             error: resp.reason,
         }))
