@@ -64,8 +64,9 @@ class RoomChannelProvider extends Component {
 
         this.subscribe('new_question', ({question}) => {
             this.setState((prevState) => ({
-                questions: prevState.questions.concat(question)
-            }))
+                questions: prevState.questions.concat(question),
+                error: prevState.error === 'no_questions_added' ? '' : prevState.error,
+            }));
         });
 
         this.subscribe('ready', (data) => {
@@ -92,7 +93,13 @@ class RoomChannelProvider extends Component {
 
         this.subscribe('player_finished', ({user_id, game_finished, q_and_a}) => {
             console.log('player', user_id, 'finished.', game_finished, q_and_a)
-        })
+        });
+
+        this.subscribe('error', ({reason}) => {
+            this.setState(() => ({
+                error: reason,
+            }));
+        });
     }
 
     onJoinSuccess = resp => {
@@ -156,7 +163,7 @@ class RoomChannelProvider extends Component {
 
     render() {
         const {roomName} = this.props;
-        const {connected, gameStarted, questions, users} = this.state;
+        const {connected, error, gameStarted, questions, users} = this.state;
         return (
             <div>
                 {connected ?
@@ -175,6 +182,7 @@ class RoomChannelProvider extends Component {
                                    users={users}
                                    questions={questions}
                                    onReady={this.onReady}
+                                   error={error}
                             />)
                     )
                     :

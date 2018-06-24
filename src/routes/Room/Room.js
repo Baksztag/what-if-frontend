@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {User} from '../../models';
+import {Button, Input} from '../../components';
 
 class Room extends Component {
     state = {
@@ -15,21 +16,7 @@ class Room extends Component {
     };
 
     componentDidMount() {
-        const {getUsers, getQuestions,
-            // subscribe
-        } = this.props;
-
-        // subscribe('user_list', ({users}) => {
-        //     this.setState({
-        //         users,
-        //     })
-        // });
-        //
-        // subscribe('user_joined', ({user}) => {
-        //     this.setState(({users}) => ({
-        //         users: users.concat(user),
-        //     }))
-        // });
+        const {getUsers, getQuestions} = this.props;
 
         getUsers();
         getQuestions();
@@ -46,9 +33,8 @@ class Room extends Component {
     };
 
     render() {
-        const {leaveRoom, roomName, users, questions, onReady} = this.props;
+        const {leaveRoom, roomName, users, questions, onReady, error} = this.props;
         const {newQuestion} = this.state;
-        console.log(users, questions)
 
         return (
             <div>
@@ -95,18 +81,24 @@ class Room extends Component {
                         </div>)
                     }
                     <div>
-                        <input type="text"
+                        <Input type="text"
                                value={newQuestion}
                                onChange={this.onNewQuestionChange}
+                               label="New question"
                         />
-                        <button onClick={this.onNewQuestionSubmit}>
+                        <Button onClick={this.onNewQuestionSubmit}>
                             Add question
-                        </button>
+                        </Button>
                     </div>
+                    {error === 'no_questions_added' && (
+                        <span>You can't be marked as ready when there are no questions</span>
+                    )}
                     <div>
-                        <button onClick={onReady}>
+                        <Button onClick={onReady}
+                                disabled={questions.length === 0}
+                        >
                             Ready!
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -124,7 +116,10 @@ Room.propTypes = {
     users: PropTypes.array.isRequired,
     questions: PropTypes.array.isRequired,
     onReady: PropTypes.func.isRequired,
+    error: PropTypes.string,
 };
-Room.defaultProps = {};
+Room.defaultProps = {
+    error: '',
+};
 
 export default Room;
