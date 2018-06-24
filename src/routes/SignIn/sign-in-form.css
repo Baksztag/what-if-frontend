@@ -20,3 +20,8 @@
     box-shadow: 4px 4px rgba(52, 61, 70, 0.3);
     background-color: #65737e;
 }
+
+.sign-in-form-error {
+    color: darkred;
+    font-size: 0.9rem;
+}

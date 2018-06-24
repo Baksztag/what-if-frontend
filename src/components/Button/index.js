@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({children, onClick}) => (
+const Button = ({children, disabled, onClick}) => (
     <button className="wi-button"
             onClick={onClick}
+            disabled={disabled}
     >
         {children}
     </button>
@@ -11,8 +12,11 @@ const Button = ({children, onClick}) => (
 
 Button.propTypes = {
     children: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
     onClick: PropTypes.func.isRequired,
 };
-Button.defaultProps = {};
+Button.defaultProps = {
+    disabled: false,
+};
 
 export default Button;
