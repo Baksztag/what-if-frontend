@@ -4,7 +4,7 @@ import {BrowserRouter} from 'react-router-dom';
 
 import AppRouter from '../Router';
 import {API} from '../../services/index';
-import {Loader} from '../../components/index';
+import {Loader, LogoutButton} from '../../components/index';
 
 import DisplayNameForm from '../../routes/DisplayName/index';
 import {WebSocketProvider as Provider} from './webSocketContext';
@@ -73,7 +73,7 @@ class WebSocketProvider extends Component {
     }
 
     // foo = () => {
-        // console.log('foo')
+    // console.log('foo')
     // };
     //
     // subscribe = (message, onReceiveCallback) => {
@@ -123,10 +123,12 @@ class WebSocketProvider extends Component {
                     (<DisplayNameForm/>)
                     :
                     (<div>
-                         <Loader/>
-                         {this.state.error}
-                     </div>)
-             )
+                        <Loader>
+                            <LogoutButton/>
+                        </Loader>
+                        {this.state.error}
+                    </div>)
+            )
     }
 }
 
