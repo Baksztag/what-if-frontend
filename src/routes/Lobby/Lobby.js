@@ -51,6 +51,15 @@ class Lobby extends Component {
         });
     }
 
+    componentDidUpdate(prevProps) {
+        if (!prevProps.connected && this.props.connected) {
+            const {getRooms} = this.props;
+
+            getRooms();
+        }
+    }
+
+
     onNewRoomNameChange = (e) => {
         this.setState({
             newRoomName: e.target.value,

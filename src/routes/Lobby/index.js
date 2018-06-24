@@ -8,7 +8,7 @@ class LobbyChannelProvider extends Component {
     state = {
         connected: false,
         error: '',
-    }
+    };
 
     componentDidMount() {
         const {joinChannel} = this.props;
@@ -16,8 +16,15 @@ class LobbyChannelProvider extends Component {
         this.channel = joinChannel('lobby:*', {}, this.onJoinSuccess, this.onJoinError);
     }
 
-    onJoinSuccess = (resp) => {
-        console.log("Joined successfully", resp)
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.error === 'User not registered' && this.state.error === '') {
+            const {joinChannel} = this.props;
+
+            this.channel = joinChannel('lobby:*', {}, this.onJoinSuccess, this.onJoinError);
+        }
+    }
+
+    onJoinSuccess = () => {
         this.setState(() => ({
             connected: true,
             error: '',
@@ -25,7 +32,6 @@ class LobbyChannelProvider extends Component {
     };
 
     onJoinError = (resp) => {
-        console.log("Unable to join", resp)
         this.setState(() => ({
             connected: false,
             error: resp.reason,
@@ -37,17 +43,12 @@ class LobbyChannelProvider extends Component {
     };
 
     createRoom = (newRoomName) => {
-        // console.log('create room', newRoomName)
         this.channel.push("create_room", {name: newRoomName});
     };
 
     getRooms = () => {
         this.channel.push("get_rooms", {});
     };
-
-    // joinRoom = (roomName) => {
-    //     this.channel.push("join_room", {name: roomName});
-    // };
 
     onRegisterSuccess = () => {
         this.setState(() => ({
@@ -56,26 +57,16 @@ class LobbyChannelProvider extends Component {
     };
 
     render() {
-        // return (
-        //     <lobbyChannelProvider value={{
-        //         createRoom: this.createRoom,
-        //         subscribe: this.subscribe,
-        //         getRooms: this.getRooms,
-        //         joinRoom: this.joinRoom,
-        //     }}>
-        //         <Lobby/>
-        //     </lobbyChannelProvider>
-        // )
-        const {error} = this.state;
+        const {connected, error} = this.state;
 
         return (
             error === 'User not registered' ?
                 (<DisplayNameForm onRegisterSuccess={this.onRegisterSuccess}/>)
                 :
-                (!!this.channel && <Lobby subscribe={this.subscribe}
+                (connected && <Lobby subscribe={this.subscribe}
+                                          connected={connected}
                                           createRoom={this.createRoom}
                                           getRooms={this.getRooms}
-                    // joinRoom={this.joinRoom}
                 />)
         )
     }
