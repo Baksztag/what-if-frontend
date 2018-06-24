@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {Route, withRouter} from 'react-router-dom';
 
 import {Best, History, Lobby, Profile, Welcome} from '../routes';
-import {Header, Loader} from '../components';
+import {Header} from '../components';
 
 class AppRouter extends Component {
     render() {
