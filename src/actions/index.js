@@ -84,7 +84,7 @@ export function getGameDetails(gameId) {
                 dispatch(setGameDetails(gameId, result));
             })
             .catch(error => {
-                dispatch(getGamesError(error))
+                dispatch(getGameDetailsError(error))
             });
     };
 }

@@ -14,7 +14,7 @@ class History extends Component {
     };
 
     render() {
-        const {error, games, hideDetails, id, loading} = this.props;
+        const {error, games, hideDetails, loading} = this.props;
 
         return (
             <div className="history-container">
