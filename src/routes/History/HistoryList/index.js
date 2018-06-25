@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import {Game} from '../../../models';
 
@@ -9,11 +10,11 @@ class HistoryList extends Component {
 
         return (
             <ul className="history-list">
-                {games.length > 0 ?
-                    (games.map((game, index) => (
-                        <li key={Game.id(game)}
+                {_.size(games) > 0 ?
+                    (_.map(games, (game, gameId) => (
+                        <li key={gameId}
                             className="history-list-item"
-                            onClick={() => displayDetails(Game.id(game))}
+                            onClick={() => displayDetails(gameId)}
                         >
                             <div className="history-list-item-label">
                                 {Game.roomName(game)}
@@ -35,7 +36,7 @@ class HistoryList extends Component {
 
 HistoryList.propTypes = {
     displayDetails: PropTypes.func.isRequired,
-    games: PropTypes.array.isRequired,
+    games: PropTypes.object.isRequired,
     hideDetails: PropTypes.func.isRequired,
 };
 HistoryList.defaultProps = {};

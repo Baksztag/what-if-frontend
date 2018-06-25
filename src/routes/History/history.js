@@ -39,7 +39,7 @@ class History extends Component {
 History.propTypes = {
     displayDetails: PropTypes.func.isRequired,
     error: PropTypes.string.isRequired,
-    games: PropTypes.array.isRequired,
+    games: PropTypes.object.isRequired,
     hideDetails: PropTypes.func.isRequired,
     id: PropTypes.number.isRequired,
     loading: PropTypes.bool.isRequired,

@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import _ from 'lodash';
+
+import {Game} from '../../../models';
 
 import {displayGameDetails, getGameDetails, hideGameDetails} from '../../../actions';
 
@@ -16,13 +19,13 @@ class HistoryDetails extends Component {
     }
 
     render() {
-        const {details, id} = this.props;
+        const {details, games, id} = this.props;
         const gameDetails = details[id];
 
         return (
             <div>
                 <div>
-                    Game details {!!id && `for game ${id}`}
+                    Game details {!!id && `for game ${id} in room "${Game.roomName(games[id])}"`}
                 </div>
                 {
                     !!gameDetails ?
@@ -35,6 +38,23 @@ class HistoryDetails extends Component {
                                         </li>
                                     ))}
                                 </ul>
+                                {_.isArray(gameDetails.q_and_a) &&
+                                (<div>
+                                    Result:
+                                    <ul>
+                                        {_.map(gameDetails.q_and_a, (qa, index) => (
+                                            <li key={`${qa.question}_${index}`}>
+                                                <div>
+                                                    {qa.question}
+                                                </div>
+                                                <div>
+                                                    {qa.answer}
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>)
+                                }
                             </div>
 
                         )
@@ -49,9 +69,10 @@ class HistoryDetails extends Component {
     }
 }
 
-function mapStateToProps({history: {gameDetails}}) {
+function mapStateToProps({history: {games, gameDetails}}) {
     return {
         error: gameDetails.error,
+        games,
         id: gameDetails.id,
         loading: gameDetails.isFetching,
         details: gameDetails.details,

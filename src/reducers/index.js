@@ -1,4 +1,7 @@
 import * as actionTypes from '../actions';
+import _ from 'lodash';
+
+import {Game} from '../models';
 
 const initialState = {
     test: '',
@@ -7,7 +10,7 @@ const initialState = {
     history: {
         isFetching: false,
         error: '',
-        games: [],
+        games: {},
         gameDetails: {
             error: '',
             details: {},
@@ -37,14 +40,18 @@ const rootReducer = (state = initialState, action) => {
                 },
             };
         case actionTypes.SET_GAMES:
+            const gamesMap = _.reduce(action.payload.games, (reducedGames, game) => {
+                reducedGames[Game.id(game)] = game;
+
+                return reducedGames;
+            }, {});
+
             return {
                 ...state,
                 history: {
                     ...state.history,
                     isFetching: false,
-                    games: [
-                        ...action.payload.games,
-                    ],
+                    games: gamesMap,
                 },
             };
         case actionTypes.GET_GAME_DETAILS:
