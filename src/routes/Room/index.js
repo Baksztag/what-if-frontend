@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router-dom';
 import _ from 'lodash';
 
 import {User} from '../../models';
@@ -152,6 +153,8 @@ class RoomChannelProvider extends Component {
     };
 
     finishGame = (game) => {
+        const {history: {push}} = this.props;
+
         this.channel.push('finish_game', {
             game: game.map(questionAnswer => ({
                     question: questionAnswer.question + ' ' + questionAnswer.questionEnd,
@@ -159,6 +162,8 @@ class RoomChannelProvider extends Component {
                 })
             )
         });
+
+        push('/history');
     };
 
     render() {
@@ -203,4 +208,4 @@ RoomChannelProvider.propTypes = {
 };
 RoomChannelProvider.defaultProps = {};
 
-export default webSocketConsumer(RoomChannelProvider);
+export default withRouter(webSocketConsumer(RoomChannelProvider));
