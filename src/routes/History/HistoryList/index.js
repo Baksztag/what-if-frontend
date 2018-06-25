@@ -5,7 +5,7 @@ import {Game} from '../../../models';
 
 class HistoryList extends Component {
     render() {
-        const {games} = this.props;
+        const {displayDetails, games} = this.props;
 
         return (
             <ul className="history-list">
@@ -13,6 +13,7 @@ class HistoryList extends Component {
                     (games.map((game, index) => (
                         <li key={Game.id(game)}
                             className="history-list-item"
+                            onClick={() => displayDetails(Game.id(game))}
                         >
                             <div className="history-list-item-label">
                                 {Game.roomName(game)}
@@ -27,14 +28,15 @@ class HistoryList extends Component {
                         No games played
                     </div>)
                 }
-
             </ul>
         );
     }
 }
 
 HistoryList.propTypes = {
+    displayDetails: PropTypes.func.isRequired,
     games: PropTypes.array.isRequired,
+    hideDetails: PropTypes.func.isRequired,
 };
 HistoryList.defaultProps = {};
 

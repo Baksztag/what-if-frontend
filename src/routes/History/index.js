@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {getGames} from '../../actions';
+import {displayGameDetails, getGames, hideGameDetails} from '../../actions';
 
 import History from './history';
 
@@ -11,12 +11,16 @@ class HistoryProvider extends Component {
     }
 
     render() {
-        const {error, games, isFetching} = this.props;
+        const {displayDetails, error, games, hideDetails, history, id, isFetching} = this.props;
 
         return (
-            <History error={error}
+            <History displayDetails={displayDetails}
+                     error={error}
                      games={games}
+                     hideDetails={hideDetails}
+                     id={id}
                      loading={isFetching}
+                     pushRoute={history.push}
             />
         );
     }
@@ -27,12 +31,15 @@ function mapStateToProps({history}) {
         error: history.error,
         games: history.games,
         isFetching: history.isFetching,
+        id: history.gameDetails.id,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
+        displayDetails: (gameId) => dispatch(displayGameDetails(gameId)),
         fetchGames: () => dispatch(getGames()),
+        hideDetails: (gameId) => dispatch(hideGameDetails(gameId)),
     };
 }
 

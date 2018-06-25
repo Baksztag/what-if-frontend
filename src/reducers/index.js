@@ -9,7 +9,12 @@ const initialState = {
         isFetching: false,
         error: '',
         games: [],
-        gameDetails: {},
+        gameDetails: {
+            error: '',
+            details: {},
+            id: '',
+            isFetching: false,
+        },
     },
 };
 
@@ -33,7 +38,6 @@ const rootReducer = (state = initialState, action) => {
                 },
             };
         case actionTypes.SET_GAMES:
-            console.log(action)
             return {
                 ...state,
                 history: {
@@ -42,6 +46,67 @@ const rootReducer = (state = initialState, action) => {
                     games: [
                         ...action.payload.games,
                     ],
+                },
+            };
+        case actionTypes.GET_GAME_DETAILS:
+            return {
+                ...state,
+                history: {
+                    ...state.history,
+                    gameDetails: {
+                        ...state.history.gameDetails,
+                        isFetching: true,
+                    },
+                }
+            };
+        case actionTypes.GET_GAME_DETAILS_ERROR:
+            return {
+                ...state,
+                history: {
+                    ...state.history,
+                    gameDetails: {
+                        ...state.history.gameDetails,
+                        error: action.payload.error,
+                        isFetching: false,
+                    },
+                },
+            };
+        case actionTypes.SET_GAME_DETAILS:
+            return {
+                ...state,
+                history: {
+                    ...state.history,
+                    gameDetails: {
+                        ...state.history.gameDetails,
+                        error: '',
+                        isFetching: false,
+                        details: {
+                            ...state.history.gameDetails.details,
+                            [action.payload.gameId]: action.payload.gameDetails,
+                        },
+                    },
+                },
+            };
+        case actionTypes.DISPLAY_GAME_DETAILS:
+            return {
+                ...state,
+                history: {
+                    ...state.history,
+                    gameDetails: {
+                        ...state.history.gameDetails,
+                        id: action.payload.gameId,
+                    },
+                },
+            };
+        case actionTypes.HIDE_GAME_DETAILS:
+            return {
+                ...state,
+                history: {
+                    ...state.history,
+                    gameDetails: {
+                        ...state.history.gameDetails,
+                        id: '',
+                    },
                 },
             };
         case actionTypes.GET_TEST:
