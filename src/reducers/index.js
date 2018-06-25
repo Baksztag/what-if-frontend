@@ -12,7 +12,7 @@ const initialState = {
         gameDetails: {
             error: '',
             details: {},
-            id: '',
+            id: 0,
             isFetching: false,
         },
     },

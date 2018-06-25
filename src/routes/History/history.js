@@ -41,7 +41,7 @@ History.propTypes = {
     error: PropTypes.string.isRequired,
     games: PropTypes.array.isRequired,
     hideDetails: PropTypes.func.isRequired,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     loading: PropTypes.bool.isRequired,
     pushRoute: PropTypes.func.isRequired,
 };
